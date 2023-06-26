@@ -1,0 +1,61 @@
+<div class="card mt-3">
+  <div class="card-header text-center">QUIZ MAKER</div>
+
+  <div class="card-body">
+    <form>
+      <div class="input-group mb-3">
+        <select
+          #categorySelect
+          class="form-select"
+          aria-label="Select a category"
+        >
+          <option selected disabled value="null">Select a category</option>
+          <option *ngFor="let c of categories$ | async" [value]="c.id">
+            {{ c.name }}
+          </option>
+        </select>
+
+        <select
+          #difficultySelect
+          class="form-select"
+          aria-label="Select difficulty"
+        >
+          <option selected disabled value="null">Select difficulty</option>
+          <option value="easy">Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+
+        <button
+          type="button"
+          (click)="onCreateQuiz(categorySelect.value, difficultySelect.value)"
+          #createBtn
+          class="btn btn-outline-secondary"
+        >
+          CREATE
+        </button>
+      </div>
+    </form>
+
+    <div *ngFor="let q of quizQuestions$ | async">
+      <app-one-quiz-part
+        (answerEmitter)="getUserAnswer($event)"
+        [quizQuestion]="q"
+      ></app-one-quiz-part>
+    </div>
+
+    <div class="row mt-5" *ngIf="userAnwsers.length === 5">
+      <div class="col-6 offset-3">
+        <div class="d-grid gap-2">
+          <button
+            class="btn btn-secondary"
+            (click)="sendUserAnwsers()"
+            type="button"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<div>{{ quizQuestion.question }}</div>
+<div class="mb-3">
+  <button
+    *ngFor="let a of quizQuestion.answers"
+    [class]="
+      quizQuestion.user_answer === a
+        ? 'btn btn-success mx-2 mt-1'
+        : 'btn btn-outline-success mx-2 mt-1'
+    "
+    (click)="onGetChoice(a)"
+  >
+    {{ a }}
+  </button>
+</div>
